@@ -1,0 +1,5 @@
+.places-wrap {
+  max-height: 40vh;
+  min-height: 350px;
+  overflow-y: auto;
+}
