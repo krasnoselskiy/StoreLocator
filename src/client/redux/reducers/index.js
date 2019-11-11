@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-  REQUEST_PLACES, RECEIVE_PLACES, INVALIDATE_ADDRESS
+  REQUEST_PLACES, RECEIVE_PLACES, INVALIDATE_ADDRESS, CLOSE_MAP_COLUMN, OPEN_MAP_COLUMN
 } from '../actions'
 
 const places = (state = {
@@ -26,6 +26,7 @@ const places = (state = {
         isFetching: false,
         didInvalidate: false,
         places: action.places,
+        mapColumn: true,
         lastUpdated: action.receivedAt
       }
     default:
@@ -37,6 +38,23 @@ const postsBySubreddit = (state = {}, action) => {
   return state
 }
 
+const mapColumn = (state = {}, action) => {
+  switch (action.type) {
+    case CLOSE_MAP_COLUMN:
+      return {
+        ...state,
+        openMapSidebar: false,
+      }
+    case OPEN_MAP_COLUMN:
+      return {
+        ...state,
+        openMapSidebar: true,
+      }
+    default:
+      return state
+  }
+}
+
 const placesByAdress = (state = {}, action) => {
   switch (action.type) {
     case INVALIDATE_ADDRESS:
@@ -44,6 +62,7 @@ const placesByAdress = (state = {}, action) => {
         ...state,
         isFetching: false,
         wrongAddress: true,
+        openMapSidebar: false,
         places: []
       }
     case RECEIVE_PLACES:
@@ -60,8 +79,9 @@ const placesByAdress = (state = {}, action) => {
 }
 
 const rootReducer = combineReducers({
-  postsBySubreddit,
-  placesByAdress
+  // postsBySubreddit,
+  placesByAdress,
+  mapColumn
 })
 
 export default rootReducer

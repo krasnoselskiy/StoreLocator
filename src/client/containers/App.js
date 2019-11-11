@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchPlaces } from '../redux/actions'
+import { fetchPlaces, openMapColumn } from '../redux/actions'
 
 import SearchForm from '../components/SearchForm'
 import Places from '../components/Places'
@@ -19,6 +19,7 @@ class App extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchPlaces('empire state building'))
+    dispatch(openMapColumn())
   }
 
   componentDidUpdate(prevProps) {
@@ -39,12 +40,13 @@ class App extends Component {
 
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          : <div className="places-wrap" style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <Places places={places} />
+          : <div className="wrap">
+            <div className="places-wrap" style={{ opacity: isFetching ? 0.5 : 1 }}>
+              <Places places={places} />
+            </div>
+            <MapContainer />
           </div>
         }
-
-        <MapContainer />
       </div>
     )
   }
