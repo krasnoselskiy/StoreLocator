@@ -1,5 +1,88 @@
 .places-wrap {
-  max-height: 40vh;
-  min-height: 350px;
+  max-height: 27vh;
+  min-height: 210px;
   overflow-y: auto;
+}
+
+.places-wrap .list_item {
+  position: relative;
+  padding-right: 100px;
+}
+
+.places-wrap .list_item .save_button {
+  position: absolute;
+  right: 10px;
+  top: 0%;
+}
+
+.mapContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.mapContainer .column {
+  overflow-y: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 40px;
+  width: 250px;
+  background: #fff;
+  z-index: 999;
+  background: #17a2b8;
+  color: #fff;
+  height: 450px;
+  z-index: 1001;
+  transform: translateX(-100%);
+  transition: all 0.35s;
+}
+
+.mapContainer .column.open {
+  transform: translateX(0);
+}
+
+.column .map_line_item {
+  padding: 10px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.35s;
+}
+
+.column .map_line_item:not(:first-of-type) {
+  margin-top: -10px;
+}
+
+.column .map_line_item:hover {
+  background: #3594a3;
+}
+
+.map_column_icon {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  color: #fff;
+  transition: all 0.35s;
+  z-index: 9999;
+}
+
+.map_column_close {
+  right: 0;
+  z-index: 9998;
+}
+
+.map_column_open {
+  display: none;
+  left: 55px;
+  top: 10px;
+  background: #17a2b8;
+  z-index: 1000;
+}
+
+.map_column_open.show {
+  display: block;
+}
+
+.map_column_icon:hover {
+  color: #fff;
+  opacity: 0.6;
 }
