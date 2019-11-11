@@ -14,7 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",
+    "classnames": "^2.2.6",
     "express": "^4.16.3",
     "leaflet": "^1.5.1",
     "prop-types": "^15.7.2",
@@ -32,7 +34,6 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.0",
-    "babel-loader": "^8.0.0",
     "clean-webpack-plugin": "^1.0.0",
     "concurrently": "^4.0.0",
     "css-loader": "^2.0.0",
