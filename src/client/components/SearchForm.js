@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchPlaces } from '../redux/actions'
+import { fetchPlaces, openMapColumn } from '../redux/actions'
 
 export class SearchForm extends Component {
   componentDidMount() {
@@ -18,24 +18,25 @@ export class SearchForm extends Component {
 
     if (address) {
       dispatch(fetchPlaces(address))
+      dispatch(openMapColumn())
     }
 
   }
 
   render() {
     return (
-      <div className="form-group">
-        <input className="form-control place-input" type="text" placeholder="Enter your place" />
+      <form onSubmit={this.handleGettingPlaces} className="form-group">
+        <input className="form-control place-input" type="text" placeholder="Enter your place" autoComplete="true" />
         <button type="submit" className="btn btn-info mt-3"
-          onClick={this.handleGettingPlaces}>Add a place</button>
-      </div>
+        >Find address</button>
+      </form>
     )
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTodoClick: (id) => {
+    subm: (id) => {
       dispatch(handleGettingPlaces(id))
     }
   }
@@ -44,4 +45,5 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapDispatchToProps
 )(SearchForm)
+
 
