@@ -76,7 +76,7 @@ export class SearchForm extends Component {
 
             {this.state.selectedFile ?
               <div className="form-group">
-                <button type="button" className="btn btn-success btn-block" onClick={this.handleLoadToServerFile}>Upload</button>
+                <button type="button" className="btn btn-info btn-block" onClick={this.handleLoadToServerFile}>Upload</button>
               </div> : null}
           </form>
         </div>
