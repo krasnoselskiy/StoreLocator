@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios';
 
 import { fetchPlaces, openMapColumn } from '../redux/actions'
 
 export class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedFile: null
+    }
+
+    this.handleLoadingFile = this.handleLoadingFile.bind(this);
+  }
+
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchPlaces('empire state building'))
@@ -23,13 +34,53 @@ export class SearchForm extends Component {
 
   }
 
+  handleLoadingFile = e => {
+    const file = event.target.files[0];
+
+    this.setState({
+      selectedFile: file
+    })
+  }
+
+  handleLoadToServerFile = e => {
+    const data = new FormData();
+    data.append('file', this.state.selectedFile)
+
+    axios.post("http://localhost:8080/upload", data, {})
+      .then(res => {
+        console.log(res.statusText)
+      })
+  }
+
   render() {
     return (
-      <form onSubmit={this.handleGettingPlaces} className="form-group">
-        <input className="form-control place-input" type="text" placeholder="Enter your place" autoComplete="true" />
-        <button type="submit" className="btn btn-info mt-3"
-        >Find address</button>
-      </form>
+      <div className="row" >
+        <div className="form-wrap col-6">
+          <form onSubmit={this.handleGettingPlaces} className="form-group">
+            <div className="form-group">
+              <input className="form-control place-input" type="text" placeholder="Enter store addess" />
+            </div>
+            <div className="form-group">
+              <input className="form-control place-input" type="text" placeholder="Enter store description" autoComplete="true" />
+            </div>
+            <button type="submit" className="btn btn-info"
+            >Find address</button>
+          </form>
+        </div>
+
+        <div className="col-6">
+          <form method="post" >
+            <div className="form-group files">
+              <input type="file" className="form-control" onChange={this.handleLoadingFile} />
+            </div>
+
+            {this.state.selectedFile ?
+              <div className="form-group">
+                <button type="button" className="btn btn-success btn-block" onClick={this.handleLoadToServerFile}>Upload</button>
+              </div> : null}
+          </form>
+        </div>
+      </div>
     )
   }
 }
