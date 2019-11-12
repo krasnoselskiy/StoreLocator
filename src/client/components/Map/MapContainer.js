@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { connect } from 'react-redux'
 
+import { yellowIcon, greenIcon } from './MapIcons'
 import MapSidebar from './MapSidebar'
 
 import './map.css'
