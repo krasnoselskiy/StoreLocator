@@ -27,7 +27,6 @@ export const openMapColumn = (action) => {
   }
 }
 
-
 export const requestPlaces = address => ({
   type: REQUEST_PLACES,
   address
