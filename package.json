@@ -8,6 +8,7 @@
     "start": "npm run build && nodemon src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
+    "serv": "nodemon src/__server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Sandeep Raveesh",
