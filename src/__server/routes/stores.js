@@ -10,11 +10,11 @@ router.get('/', async (req, res) => {
 
 router.post('/create', async (req, res, next) => {
   try {
-    if (!req.body.title) {
+    if (!req.body.display_name) {
       throw new Error();
     }
     const store = new Store({
-      title: req.body.title,
+      display_name: req.body.display_name,
       lat: req.body.lat,
       lon: req.body.lon,
     })
