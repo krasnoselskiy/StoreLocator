@@ -17,7 +17,6 @@ export class SearchForm extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch(fetchPlaces('empire state building'))
   }
 
   handleGettingPlaces = e => {
