@@ -25,7 +25,7 @@ const MapSidebar = ({ places, openMapSidebar, dispatch }) => {
           <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
         </button>
         {places ? places.map((place, i) =>
-          <MapLineItem key={place.place_id} title={place.display_name} lat={place.lat} lon={place.lon} />
+          <MapLineItem key={i} title={place.display_name} lat={place.lat} lon={place.lon} />
         ) : null}
       </div>
     </div>
@@ -34,6 +34,7 @@ const MapSidebar = ({ places, openMapSidebar, dispatch }) => {
 
 
 const mapStateToProps = state => {
+  console.log(JSON.stringify(state, null, 4));
   return {
     places: state.placesByAdress.places,
     openMapSidebar: state.mapColumn.openMapSidebar
