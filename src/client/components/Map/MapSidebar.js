@@ -34,7 +34,6 @@ const MapSidebar = ({ places, openMapSidebar, dispatch }) => {
 
 
 const mapStateToProps = state => {
-  console.log(JSON.stringify(state, null, 4));
   return {
     places: state.placesByAdress.places,
     openMapSidebar: state.mapColumn.openMapSidebar
