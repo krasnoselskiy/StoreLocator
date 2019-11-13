@@ -1,2 +1,4 @@
-/node_modules
 .DS_Store
+/node_modules
+src/__server/node_modules
+.env
