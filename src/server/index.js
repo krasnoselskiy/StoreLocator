@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.static('dist'));
 
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+app.listen(process.env.PORT || 8082, () => console.log(`Listening on port ${process.env.PORT || 8082}!`));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -30,4 +30,12 @@ app.post('/upload', function (req, res) {
     }
     return res.status(200).send(req.file)
   })
+});
+
+app.get('/', function (req, res) {
+  res.status(200);
+});
+
+app.post('/create', function (req, res) {
+  res.status(200);
 });
