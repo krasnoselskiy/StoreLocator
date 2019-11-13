@@ -5,16 +5,18 @@ const Place = (props) => {
 
   const { place } = props;
 
+  console.log(place);
+
   const handlerToSavePin = (e) => {
     const data = {
-      title: place.display_name,
+      display_name: place.display_name,
       lat: place.lat,
       lon: place.lon
     }
 
     axios.post('http://localhost:5000/create', data, {})
-      .then(response => {
-        console.log(response);
+      .then(res => {
+
       })
       .catch(error => {
         console.log(error);
