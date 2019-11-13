@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchPlaces, openMapColumn, fetchPlacesFromDB } from '../redux/actions'
+import {
+  fetchPlacesFromDB,
+} from '../redux/actions'
+import { ToastContainer } from 'react-toastify';
 
 import SearchForm from '../components/SearchForm'
 import Places from '../components/Places'
 import MapContainer from '../components/Map/MapContainer'
 
 import './app.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   static propTypes = {
@@ -19,7 +23,6 @@ class App extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchPlacesFromDB(null))
-    dispatch(openMapColumn())
   }
 
   render() {
@@ -33,12 +36,13 @@ class App extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div className="wrap">
-            <div className="places-wrap" style={{ opacity: isFetching ? 0.5 : 1 }}>
+            <div className="places-wrap">
               <Places places={places} />
             </div>
             <MapContainer />
           </div>
         }
+        <ToastContainer />
       </div>
     )
   }
