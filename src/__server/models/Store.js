@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
-  title: {
+  display_name: {
     type: String
   },
   lat: {
