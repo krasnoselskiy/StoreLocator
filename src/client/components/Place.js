@@ -21,10 +21,10 @@ const Place = (props) => {
       });
   }
 
-  const place_title = `${place.display_name.substring(0, 85)}...`;
+  const place_title = `${place.display_name.substring(0, 125)}...`;
 
   return (
-    <li className="list_item mb-2">
+    <li className="list_item mb-3">
       <div>{place_title}</div>
 
       <button className="btn btn-info save_button" onClick={handlerToSavePin}>Save</button>
