@@ -1,6 +1,16 @@
 import { combineReducers } from 'redux'
 import {
-  REQUEST_PLACES, RECEIVE_PLACES, INVALIDATE_ADDRESS, CLOSE_MAP_COLUMN, OPEN_MAP_COLUMN
+  REQUEST_PLACES,
+  RECEIVE_PLACES,
+  INVALIDATE_ADDRESS,
+  CLOSE_MAP_COLUMN,
+  OPEN_MAP_COLUMN,
+  SAVE_TO_DB_BEGIN,
+  SAVE_TO_DB_SUCCESS,
+  SAVE_TO_DB_ERROR,
+  GET_FROM_DB_BEGIN,
+  GET_FROM_DB_SUCCESS,
+  GET_FROM_DB_ERROR
 } from '../actions'
 
 const places = (state = {
@@ -32,10 +42,6 @@ const places = (state = {
     default:
       return state
   }
-}
-
-const postsBySubreddit = (state = {}, action) => {
-  return state
 }
 
 const mapColumn = (state = {}, action) => {
@@ -78,10 +84,70 @@ const placesByAdress = (state = {}, action) => {
   }
 }
 
+const saveToDb = (state = {}, action) => {
+  switch (action.type) {
+    case SAVE_TO_DB_BEGIN:
+      return {
+        ...state,
+        isSaving: true,
+        isSaved: false,
+        hasError: false,
+        success: false
+      }
+    case SAVE_TO_DB_SUCCESS:
+      return {
+        ...state,
+        isSaving: false,
+        isSaved: false,
+        hasError: false,
+        success: true
+      }
+    case SAVE_TO_DB_ERROR:
+      return {
+        ...state,
+        isSaving: false,
+        isSaved: false,
+        hasError: true,
+        success: false
+      }
+    default:
+      return state
+  }
+}
+
+const getFromDb = (state = {}, action) => {
+  switch (action.type) {
+    case GET_FROM_DB_BEGIN:
+      return {
+        ...state,
+        isGetting: true,
+        isRecieved: false,
+        hasError: false
+      }
+    case GET_FROM_DB_SUCCESS:
+      return {
+        ...state,
+        isSavingToDB: false,
+        isRecieved: false,
+        isHasError: false
+      }
+    case GET_FROM_DB_ERROR:
+      return {
+        ...state,
+        isSavingToDB: false,
+        isRecieved: false,
+        isHasError: true
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
-  // postsBySubreddit,
   placesByAdress,
-  mapColumn
+  mapColumn,
+  saveToDb,
+  getFromDb
 })
 
 export default rootReducer
