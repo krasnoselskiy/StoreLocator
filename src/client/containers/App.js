@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchPlaces, openMapColumn } from '../redux/actions'
+import { fetchPlaces, openMapColumn, fetchPlacesFromDB } from '../redux/actions'
 
 import SearchForm from '../components/SearchForm'
 import Places from '../components/Places'
@@ -18,16 +18,8 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch(fetchPlaces('empire state building'))
+    dispatch(fetchPlacesFromDB(null))
     dispatch(openMapColumn())
-  }
-
-  componentDidUpdate(prevProps) {
-
-  }
-
-  handleChange = nextSubreddit => {
-    this.props.dispatch(selectSubreddit(nextSubreddit))
   }
 
   render() {
