@@ -11,54 +11,60 @@ export const GET_FROM_DB_BEGIN = 'GET_FROM_DB_BEGIN';
 export const GET_FROM_DB_SUCCESS = 'GET_FROM_DB_SUCCESS';
 export const GET_FROM_DB_ERROR = 'GET_FROM_DB_ERROR';
 
-export const saveToDbBegin = (action) => (
+import { toast } from 'react-toastify';
+import axios from 'axios';
+
+export const savingToDbBegin = (action) => (
   {
     type: SAVE_TO_DB_BEGIN,
     action
   }
 )
 
-export const saveToDbSuccess = (action) => (
-  {
+export const savingToDbSuccess = (action) => {
+  toast.success('Saving to database successfully :)')
+
+  return {
     type: SAVE_TO_DB_SUCCESS,
     action
   }
-)
+}
 
-export const saveToDbError = (action) => (
-  {
+export const savingToDbError = (action) => {
+  toast.error('Saving failed !')
+
+  return {
     type: SAVE_TO_DB_ERROR,
     action
   }
-)
+}
 
-export const getFromDbBegin = (action) => (
+export const gettingFromDbBegin = (action) => (
   {
-    type: SAVE_TO_DB_BEGIN,
+    type: GET_FROM_DB_BEGIN,
     action
   }
 )
 
-export const getFromDbSuccess = (action) => (
+export const gettingFromDbSuccess = (action) => (
   {
     type: GET_FROM_DB_SUCCESS,
     action
   }
 )
 
-export const getFromDbError = (action) => (
+export const gettingFromDbError = (action) => (
   {
     type: GET_FROM_DB_ERROR,
     action
   }
 )
 
-export const receivePlaces = (address, json) => (
+export const receivePlaces = (address, places) => (
   {
     type: RECEIVE_PLACES,
     address,
-    places: json,
-    receivedAt: Date.now()
+    places
   }
 )
 
@@ -94,12 +100,32 @@ export const fetchPlaces = address => dispatch => {
     .catch((e) => { console.log(e) });
 }
 
-export const fetchPlacesFromDB = (address) => dispatch => {
-  dispatch(requestPlacesFromDB(address))
-  return fetch(`http://localhost:5000`)
-    .then(response => response.json())
-    .then(json => dispatch(receivePlaces(address, json)))
-    .catch((e) => { console.log(e) });
+export const fetchPlacesFromDB = (stores) => dispatch => {
+  dispatch(gettingFromDbBegin(null))
+
+  return axios.get(`http://localhost:5000`)
+    .then(res => {
+      dispatch(gettingFromDbSuccess(null))
+      dispatch(receivePlaces(stores, res.data))
+      dispatch(openMapColumn())
+    })
+    .catch(error => {
+      dispatch(gettingFromDbError(error))
+    });
+}
+
+export const saveToDB = (store) => dispatch => {
+  dispatch(savingToDbBegin(null))
+
+  return axios.post('http://localhost:5000/create', store, {})
+    .then(res => {
+      dispatch(savingToDbSuccess(null))
+      dispatch(fetchPlacesFromDB(null))
+      dispatch(openMapColumn())
+    })
+    .catch(error => {
+      dispatch(gettingFromDbError(error))
+    });
 }
 
 
