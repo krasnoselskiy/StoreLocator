@@ -128,5 +128,13 @@ export const saveToDB = (store) => dispatch => {
     });
 }
 
+export const deleteFromDB = (store_id) => dispatch => {
+  return axios.post('http://localhost:5000/delete', store, {})
+    .then(res => {
+    })
+    .catch(error => {
+    });
+}
+
 
 

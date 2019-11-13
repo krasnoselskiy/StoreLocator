@@ -15,13 +15,7 @@ const Place = (props) => {
   }
 
   const handlerToDeletePin = (e) => {
-    const data = {
-      display_name: place.display_name,
-      lat: place.lat,
-      lon: place.lon
-    }
-
-    dispatch(saveToDB(data))
+    const id = place._id;
   }
 
   const place_title = `${place.display_name.substring(0, 125)}...`;
