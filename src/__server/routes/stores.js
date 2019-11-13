@@ -16,7 +16,7 @@ router.post('/create', async (req, res, next) => {
     const store = new Store({
       display_name: req.body.display_name,
       lat: req.body.lat,
-      lon: req.body.lon,
+      lon: req.body.lon
     })
     await store.save()
     res.sendStatus(200);
