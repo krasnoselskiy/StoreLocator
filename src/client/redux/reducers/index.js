@@ -122,13 +122,13 @@ const getFromDb = (state = {}, action) => {
         ...state,
         isGetting: true,
         isRecieved: false,
-        hasError: false
+        isHasError: false
       }
     case GET_FROM_DB_SUCCESS:
       return {
         ...state,
-        isSavingToDB: false,
-        isRecieved: false,
+        isGetting: false,
+        isRecieved: true,
         isHasError: false
       }
     case GET_FROM_DB_ERROR:
