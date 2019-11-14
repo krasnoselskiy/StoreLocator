@@ -15,10 +15,6 @@ export class SearchForm extends Component {
     this.handleLoadingFile = this.handleLoadingFile.bind(this);
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props
-  }
-
   handleGettingPlaces = e => {
     e.preventDefault()
     const { dispatch } = this.props
@@ -30,7 +26,6 @@ export class SearchForm extends Component {
       dispatch(fetchPlaces(address))
       dispatch(openMapColumn())
     }
-
   }
 
   handleLoadingFile = e => {
@@ -58,9 +53,6 @@ export class SearchForm extends Component {
           <form onSubmit={this.handleGettingPlaces} className="form-group">
             <div className="form-group">
               <input className="form-control place-input" type="text" placeholder="Enter store addess" />
-            </div>
-            <div className="form-group">
-              <input className="form-control place-input" type="text" placeholder="Enter store description" autoComplete="true" />
             </div>
             <button type="submit" className="btn btn-info"
             >Find address</button>
