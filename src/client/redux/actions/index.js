@@ -10,9 +10,37 @@ export const SAVE_TO_DB_ERROR = 'SAVE_TO_DB_ERROR';
 export const GET_FROM_DB_BEGIN = 'GET_FROM_DB_BEGIN';
 export const GET_FROM_DB_SUCCESS = 'GET_FROM_DB_SUCCESS';
 export const GET_FROM_DB_ERROR = 'GET_FROM_DB_ERROR';
+export const DELETING_FROM_DB_BEGIN = 'DELETING_FROM_DB_BEGIN';
+export const DELETING_FROM_DB_SUCCESS = 'DELETING_FROM_DB_SUCCESS';
+export const DELETING_FROM_DB_ERROR = 'DELETING_FROM_DB_ERROR';
 
 import { toast } from 'react-toastify';
 import axios from 'axios';
+
+export const deletingToDbBegin = (action) => (
+  {
+    type: DELETING_FROM_DB_BEGIN,
+    action
+  }
+)
+
+export const deletingToDbSuccess = (action) => {
+  toast.success('Deletion from the database was successful!')
+
+  return {
+    type: DELETING_FROM_DB_SUCCESS,
+    action
+  }
+}
+
+export const deletingToDbError = (action) => {
+  toast.error('Deletion from the database was failed!')
+
+  return {
+    type: DELETING_FROM_DB_ERROR,
+    action
+  }
+}
 
 export const savingToDbBegin = (action) => (
   {
@@ -22,7 +50,7 @@ export const savingToDbBegin = (action) => (
 )
 
 export const savingToDbSuccess = (action) => {
-  toast.success('Saving to database successfully :)')
+  toast.success('Saving to database was successfull :)')
 
   return {
     type: SAVE_TO_DB_SUCCESS,
@@ -31,7 +59,7 @@ export const savingToDbSuccess = (action) => {
 }
 
 export const savingToDbError = (action) => {
-  toast.error('Saving failed !')
+  toast.error('Saving to database was failed!')
 
   return {
     type: SAVE_TO_DB_ERROR,
@@ -53,12 +81,13 @@ export const gettingFromDbSuccess = (action) => (
   }
 )
 
-export const gettingFromDbError = (action) => (
-  {
+export const gettingFromDbError = (action) => {
+  toast.error('Saving to database was failed!')
+  return {
     type: GET_FROM_DB_ERROR,
     action
   }
-)
+}
 
 export const receivePlaces = (address, places) => (
   {
@@ -120,7 +149,6 @@ export const saveToDB = (store) => dispatch => {
   return axios.post('http://localhost:5000/create', store, {})
     .then(res => {
       dispatch(savingToDbSuccess(null))
-      dispatch(fetchPlacesFromDB(null))
       dispatch(openMapColumn())
     })
     .catch(error => {
@@ -128,11 +156,15 @@ export const saveToDB = (store) => dispatch => {
     });
 }
 
-export const deleteFromDB = (store_id) => dispatch => {
-  return axios.post('http://localhost:5000/delete', store, {})
+export const deleteOneFromDb = (id) => dispatch => {
+  dispatch(deletingToDbBegin(null))
+  return axios.delete(`http://localhost:5000/delete/${id}`)
     .then(res => {
+      dispatch(deletingToDbSuccess(null))
+      dispatch(fetchPlacesFromDB(null))
     })
     .catch(error => {
+      dispatch(deletingToDbError(null))
     });
 }
 
