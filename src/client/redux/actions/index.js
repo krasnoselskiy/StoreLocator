@@ -13,9 +13,33 @@ export const GET_FROM_DB_ERROR = 'GET_FROM_DB_ERROR';
 export const DELETING_FROM_DB_BEGIN = 'DELETING_FROM_DB_BEGIN';
 export const DELETING_FROM_DB_SUCCESS = 'DELETING_FROM_DB_SUCCESS';
 export const DELETING_FROM_DB_ERROR = 'DELETING_FROM_DB_ERROR';
+export const MAP_RECENTER_BEGIN = 'MAP_RECENTER_BEGIN';
+export const MAP_RECENTER_ERROR = 'MAP_RECENTER_ERROR';
+export const MAP_RECENTER_SUCCESS = 'MAP_RECENTER_SUCCESS';
 
 import { toast } from 'react-toastify';
 import axios from 'axios';
+
+export const mapRecenterBegin = (coordinates) => (
+  {
+    type: MAP_RECENTER_BEGIN,
+    coordinates
+  }
+)
+
+export const mapRecenterSuccess = (action) => {
+  return {
+    type: MAP_RECENTER_SUCCESS,
+    action
+  }
+}
+
+export const mapRecenterError = (action) => {
+  return {
+    type: MAP_RECENTER_ERROR,
+    action
+  }
+}
 
 export const deletingToDbBegin = (action) => (
   {
@@ -99,7 +123,7 @@ export const receivePlaces = (address, places) => (
 
 export const closeMapColumn = (action) => {
   return {
-    type: action_types.CLOSE_MAP_COLUMN,
+    type: CLOSE_MAP_COLUMN,
     action
   }
 }

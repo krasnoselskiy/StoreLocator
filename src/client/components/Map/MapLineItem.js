@@ -1,15 +1,17 @@
 import React from 'react';
 
-const MapLineItem = ({ title, lat, lon }) => {
+const MapLineItem = (props) => {
+
+  const { title, lat, lon } = props;
 
   const cutted_title = title.substring(0, 45) + '...'
 
   const handlerMapItemCLick = (e) => {
-    console.log(e.target.dataset.lat, e.target.dataset.lon);
+    props.mapRecenter(lat, lon)
   }
 
   return (
-    <div className="map_line_item" data-lat={lat} data-lon={lon} onClick={handlerMapItemCLick}>
+    <div className="map_line_item" onClick={handlerMapItemCLick}>
       <span className="title">{cutted_title}</span>
     </div>
   );

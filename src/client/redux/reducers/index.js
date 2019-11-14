@@ -13,7 +13,10 @@ import {
   GET_FROM_DB_ERROR,
   DELETING_FROM_DB_BEGIN,
   DELETING_FROM_DB_SUCCESS,
-  DELETING_FROM_DB_ERROR
+  DELETING_FROM_DB_ERROR,
+  MAP_RECENTER_BEGIN,
+  MAP_RECENTER_ERROR,
+  MAP_RECENTER_SUCCESS
 } from '../actions'
 
 const places = (state = {}, action) => {
@@ -174,12 +177,42 @@ const deleteOneFromDb = (state = {}, action) => {
   }
 }
 
+const mapRecenter = (state = {}, action) => {
+  switch (action.type) {
+    case MAP_RECENTER_BEGIN:
+      return {
+        ...state,
+        isBegin: true,
+        isSuccess: false,
+        isHasError: false,
+        coordinates: action.coordinates
+      }
+    case DELETING_FROM_DB_SUCCESS:
+      return {
+        ...state,
+        isBegin: false,
+        isSuccess: true,
+        isHasError: false
+      }
+    case DELETING_FROM_DB_ERROR:
+      return {
+        ...state,
+        isBegin: false,
+        isSuccess: false,
+        isHasError: true
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   placesByAdress,
   mapColumn,
   saveToDb,
   getFromDb,
-  deleteOneFromDb
+  deleteOneFromDb,
+  mapRecenter
 })
 
 export default rootReducer
