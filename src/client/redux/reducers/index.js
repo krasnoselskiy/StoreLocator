@@ -10,18 +10,18 @@ import {
   SAVE_TO_DB_ERROR,
   GET_FROM_DB_BEGIN,
   GET_FROM_DB_SUCCESS,
-  GET_FROM_DB_ERROR
+  GET_FROM_DB_ERROR,
+  DELETING_FROM_DB_BEGIN,
+  DELETING_FROM_DB_SUCCESS,
+  DELETING_FROM_DB_ERROR
 } from '../actions'
 
-const places = (state = {
-  isFetching: false,
-  didInvalidate: false,
-  items: []
-}, action) => {
+const places = (state = {}, action) => {
   switch (action.type) {
-    case INVALIDATE_ADDRESS:
+    case INVALID_ADDRESS:
       return {
         ...state,
+        isFetching: false,
         didInvalidate: true
       }
     case REQUEST_PLACES:
@@ -146,11 +146,40 @@ const getFromDb = (state = {}, action) => {
   }
 }
 
+const deleteOneFromDb = (state = {}, action) => {
+  switch (action.type) {
+    case DELETING_FROM_DB_BEGIN:
+      return {
+        ...state,
+        isDeletingOneBegin: true,
+        isDeletedOne: false,
+        isHasError: false
+      }
+    case DELETING_FROM_DB_SUCCESS:
+      return {
+        ...state,
+        isDeletingOneBegin: false,
+        isDeletedOne: true,
+        isHasError: false
+      }
+    case DELETING_FROM_DB_ERROR:
+      return {
+        ...state,
+        isDeletingOneBegin: false,
+        isDeletedOne: false,
+        isHasError: true
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   placesByAdress,
   mapColumn,
   saveToDb,
-  getFromDb
+  getFromDb,
+  deleteOneFromDb
 })
 
 export default rootReducer
