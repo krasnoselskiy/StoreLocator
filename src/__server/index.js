@@ -20,8 +20,7 @@ app.use(storeRoutes)
 async function start() {
   try {
     await mongoose.connect(
-      // `mongodb+srv://${process.env.LOGIN}:${process.env.PASS}@cluster0-txram.mongodb.net/stores`,
-      `mongodb+srv://admin:210347qq@cluster0-txram.mongodb.net/stores`,
+      `mongodb+srv://${process.env.LOGIN}:${process.env.PASS}@cluster0-txram.mongodb.net/stores`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
