@@ -26,4 +26,21 @@ router.post('/create', async (req, res, next) => {
   }
 })
 
+router.delete('/stores/:id', async (req, res, next) => {
+  try {
+    if (!req.params.id) {
+      throw new Error();
+    }
+
+    Store.findByIdAndDelete(req.params.id, function (err) {
+      if (err) console.log(err);
+      console.log("Successful deletion");
+      res.sendStatus(200);
+    });
+
+  } catch (e) {
+    next(e);
+  }
+})
+
 module.exports = router
