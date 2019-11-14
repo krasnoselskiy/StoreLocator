@@ -1,20 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import Place from './Place'
 
-const Places = ({ places }) => {
+const Places = ({ places, isGetFromAPI }) => {
   return (
     <ul>
       {places ? places.map((place, i) =>
-        <Place key={i} place={place} />
+        <Place key={i} place={place} isGetFromAPI={isGetFromAPI} />
       ) : null}
     </ul>
   )
-}
-
-Places.propTypes = {
-  places: PropTypes.array.isRequired
 }
 
 export default Places

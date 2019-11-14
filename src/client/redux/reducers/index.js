@@ -78,7 +78,10 @@ const placesByAdress = (state = {}, action) => {
         places: action.places
       }
     case REQUEST_PLACES:
-      return state
+      return {
+        ...state,
+        isGetFromAPI: true
+      }
     default:
       return state
   }

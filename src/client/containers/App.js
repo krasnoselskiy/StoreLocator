@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   render() {
-    const { isFetching, places } = this.props
+    const { isFetching, places, isGetFromAPI } = this.props
     const isEmpty = places.length === 0
     return (
       <div className="container mt-3">
@@ -37,7 +37,7 @@ class App extends Component {
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div className="wrap">
             <div className="places-wrap">
-              <Places places={places} />
+              <Places places={places} isGetFromAPI={isGetFromAPI} />
             </div>
             <MapContainer />
           </div>
@@ -50,6 +50,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   const { placesByAdress } = state;
+
+  let isGetFromAPI = false;
   let isFetching = true;
   let places = [];
 
@@ -58,9 +60,14 @@ const mapStateToProps = state => {
     places = placesByAdress.places;
   }
 
+  if (placesByAdress.isGetFromAPI) {
+    isGetFromAPI = true
+  }
+
   return {
     isFetching,
-    places
+    places,
+    isGetFromAPI
   }
 }
 
