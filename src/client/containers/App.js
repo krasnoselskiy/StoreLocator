@@ -30,7 +30,7 @@ class App extends Component {
     const isEmpty = places.length === 0
     return (
       <div className="container mt-3">
-        <h1>Add your place to map</h1>
+        <h1>Add your store to map</h1>
         <SearchForm />
 
         {isEmpty
