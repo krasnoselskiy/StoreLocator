@@ -34,7 +34,7 @@ class App extends Component {
         <SearchForm />
 
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty...</h2>)
           : <div className="wrap">
             <div className="places-wrap">
               <Places places={places} isGetFromAPI={isGetFromAPI} />
