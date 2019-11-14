@@ -1,3 +1,9 @@
+import { toast } from 'react-toastify';
+import axios from 'axios';
+
+const toastConfig = {
+  autoClose: 1000
+};
 export const REQUEST_PLACES = 'REQUEST_PLACES';
 export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const WRONG_ADDRESS = 'WRONG_ADDRESS';
@@ -16,9 +22,6 @@ export const DELETING_FROM_DB_ERROR = 'DELETING_FROM_DB_ERROR';
 export const MAP_RECENTER_BEGIN = 'MAP_RECENTER_BEGIN';
 export const MAP_RECENTER_ERROR = 'MAP_RECENTER_ERROR';
 export const MAP_RECENTER_SUCCESS = 'MAP_RECENTER_SUCCESS';
-
-import { toast } from 'react-toastify';
-import axios from 'axios';
 
 export const mapRecenterBegin = (coordinates) => (
   {
@@ -49,7 +52,9 @@ export const deletingToDbBegin = (action) => (
 )
 
 export const deletingToDbSuccess = (action) => {
-  toast.success('Deletion from the database was successful!')
+  toast.success('Deletion from the database was successful!', {
+    autoClose: toastConfig.autoClose
+  })
 
   return {
     type: DELETING_FROM_DB_SUCCESS,
@@ -58,7 +63,9 @@ export const deletingToDbSuccess = (action) => {
 }
 
 export const deletingToDbError = (action) => {
-  toast.error('Deletion from the database was failed!')
+  toast.error('Deletion from the database was failed!', {
+    autoClose: toastConfig.autoClose
+  })
 
   return {
     type: DELETING_FROM_DB_ERROR,
@@ -74,7 +81,9 @@ export const savingToDbBegin = (action) => (
 )
 
 export const savingToDbSuccess = (action) => {
-  toast.success('Saving to database was successfull :)')
+  toast.success('Saving to database was successfull :)', {
+    autoClose: toastConfig.autoClose
+  })
 
   return {
     type: SAVE_TO_DB_SUCCESS,
@@ -83,7 +92,9 @@ export const savingToDbSuccess = (action) => {
 }
 
 export const savingToDbError = (action) => {
-  toast.error('Saving to database was failed!')
+  toast.error('Saving to database was failed!', {
+    autoClose: toastConfig.autoClose
+  });
 
   return {
     type: SAVE_TO_DB_ERROR,
@@ -106,7 +117,10 @@ export const gettingFromDbSuccess = (action) => (
 )
 
 export const gettingFromDbError = (action) => {
-  toast.error('Saving to database was failed!')
+  toast.error('Saving to database was failed!', {
+    autoClose: toastConfig.autoClose
+  });
+
   return {
     type: GET_FROM_DB_ERROR,
     action
@@ -122,7 +136,10 @@ export const receivePlaces = (address, places) => (
 )
 
 export const wrongAddress = (action) => {
-  toast.error('Invalid address!')
+  toast.error('Invalid address!', {
+    autoClose: toastConfig.autoClose
+  });
+
   return {
     type: WRONG_ADDRESS,
     action
