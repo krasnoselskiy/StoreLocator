@@ -26,7 +26,7 @@ router.post('/create', async (req, res, next) => {
   }
 })
 
-router.delete('/stores/:id', async (req, res, next) => {
+router.delete('/delete/:id', async (req, res, next) => {
   try {
     if (!req.params.id) {
       throw new Error();
