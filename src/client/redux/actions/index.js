@@ -1,6 +1,6 @@
 export const REQUEST_PLACES = 'REQUEST_PLACES';
 export const RECEIVE_PLACES = 'RECEIVE_PLACES';
-export const INVALIDATE_ADDRESS = 'INVALIDATE_ADDRESS';
+export const WRONG_ADDRESS = 'WRONG_ADDRESS';
 export const CLOSE_MAP_COLUMN = 'CLOSE_MAP_COLUMN';
 export const OPEN_MAP_COLUMN = 'OPEN_MAP_COLUMN';
 export const REQUEST_PLACES_FROM_DB = 'REQUEST_PLACES_FROM_DB';
@@ -121,6 +121,14 @@ export const receivePlaces = (address, places) => (
   }
 )
 
+export const wrongAddress = (action) => {
+  toast.error('Invalid address!')
+  return {
+    type: WRONG_ADDRESS,
+    action
+  }
+}
+
 export const closeMapColumn = (action) => {
   return {
     type: CLOSE_MAP_COLUMN,
@@ -149,8 +157,15 @@ export const fetchPlaces = address => dispatch => {
   dispatch(requestPlaces(address))
   return fetch(`https://us1.locationiq.com/v1/search.php?key=cfdebe1b287c62&q=${address}&format=json`)
     .then(response => response.json())
-    .then(json => dispatch(receivePlaces(address, json)))
-    .catch((e) => { console.log(e) });
+    .then(res => {
+      if (res.error) {
+        return dispatch(wrongAddress(address))
+      }
+      dispatch(receivePlaces(address, res))
+    })
+    .catch((e) => {
+      dispatch(wrongAddress(address))
+    });
 }
 
 export const fetchPlacesFromDB = (stores) => dispatch => {

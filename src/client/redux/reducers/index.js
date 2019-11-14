@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import {
   REQUEST_PLACES,
   RECEIVE_PLACES,
-  INVALIDATE_ADDRESS,
+  WRONG_ADDRESS,
   CLOSE_MAP_COLUMN,
   OPEN_MAP_COLUMN,
   SAVE_TO_DB_BEGIN,
@@ -66,7 +66,7 @@ const mapColumn = (state = {}, action) => {
 
 const placesByAdress = (state = {}, action) => {
   switch (action.type) {
-    case INVALIDATE_ADDRESS:
+    case WRONG_ADDRESS:
       return {
         ...state,
         isFetching: false,

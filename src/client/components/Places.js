@@ -4,7 +4,7 @@ import Place from './Place'
 const Places = ({ places, isGetFromAPI }) => {
   return (
     <ul>
-      {places ? places.map((place, i) =>
+      {places.length ? places.map((place, i) =>
         <Place key={i} place={place} isGetFromAPI={isGetFromAPI} />
       ) : null}
     </ul>
