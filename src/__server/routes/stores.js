@@ -34,7 +34,6 @@ router.delete('/stores/:id', async (req, res, next) => {
 
     Store.findByIdAndDelete(req.params.id, function (err) {
       if (err) console.log(err);
-      console.log("Successful deletion");
       res.sendStatus(200);
     });
 
