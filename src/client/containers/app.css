@@ -143,3 +143,7 @@
   text-transform: capitalize;
   text-align: center;
 }
+
+.Toastify .Toastify__toast--success {
+  background: #2ea591;
+}
