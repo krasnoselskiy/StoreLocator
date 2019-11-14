@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { saveToDB } from '../redux/actions'
+import { saveToDB, deleteOneFromDb } from '../redux/actions'
 
 const Place = (props) => {
   const { place, dispatch, isGetFromAPI } = props;
@@ -15,7 +15,7 @@ const Place = (props) => {
   }
 
   const handlerToDeletePin = (e) => {
-    const id = place._id;
+    dispatch(deleteOneFromDb(place._id))
   }
 
   const place_title = `${place.display_name.substring(0, 125)}...`;
