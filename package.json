@@ -13,7 +13,7 @@
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
     "serv": "nodemon src/__server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "con": "concurrently \"node src/__server/index.js\" \"webpack-dev-server --mode development --devtool inline-source-map --hot\""
   },
   "author": "Sandeep Raveesh",
   "license": "ISC",
