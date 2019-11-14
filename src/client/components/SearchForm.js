@@ -43,8 +43,8 @@ export class SearchForm extends Component {
     function createObj(first, second) {
       const result = {};
       first.forEach((key, i) => {
-        console.log(typeof (second[i]));
-        return result[key] = second[i];
+        let value = second[i].replace(/['"]+/g, '').replace(/\s+/g, '');
+        return result[key] = value;
       })
       return result;
     }
