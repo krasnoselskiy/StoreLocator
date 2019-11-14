@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import CSVReader from 'react-csv-reader'
 import axios from 'axios';
 
 import { fetchPlaces, openMapColumn } from '../redux/actions'
@@ -36,11 +37,32 @@ export class SearchForm extends Component {
     })
   }
 
+  handleCreateJSON = (data) => {
+    let json = [];
+
+    function createObj(first, second) {
+      const result = {};
+      first.forEach((key, i) => {
+        console.log(typeof (second[i]));
+        return result[key] = second[i];
+      })
+      return result;
+    }
+
+    data.map((item, i) => {
+      if (i > 0) {
+        json.push(createObj(data[0], data[i]))
+      }
+    })
+
+    console.log(json);
+  }
+
   handleLoadToServerFile = e => {
     const data = new FormData();
     data.append('file', this.state.selectedFile)
 
-    axios.post("http://localhost:8080/upload", data, {})
+    axios.post("http://localhost:5000/upload", data, {})
       .then(res => {
         console.log(res.statusText)
       })
@@ -60,16 +82,11 @@ export class SearchForm extends Component {
         </div>
 
         <div className="col-6">
-          <form method="post" >
-            <div className="form-group files">
-              <input type="file" className="form-control" onChange={this.handleLoadingFile} />
-            </div>
-
-            {this.state.selectedFile ?
-              <div className="form-group">
-                <button type="button" className="btn btn-info btn-block" onClick={this.handleLoadToServerFile}>Upload</button>
-              </div> : null}
-          </form>
+          <CSVReader onFileLoaded={data => this.handleCreateJSON(data)} />
+          {this.state.selectedFile ?
+            <div className="form-group">
+              <button type="button" className="btn btn-info btn-block" onClick={this.handleLoadToServerFile}>Upload</button>
+            </div> : null}
         </div>
       </div>
     )
