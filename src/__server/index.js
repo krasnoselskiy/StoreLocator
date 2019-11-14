@@ -9,7 +9,7 @@ const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.options('/create', function (req, res) {
+app.options(['/create', '/delete/:id'], function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader('Access-Control-Allow-Methods', '*')
   res.setHeader("Access-Control-Allow-Headers", "*")
