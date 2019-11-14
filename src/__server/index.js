@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const multer = require('multer')
 const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser')
 const storeRoutes = require('./routes/stores')
@@ -9,7 +10,7 @@ const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.options(['/create', '/delete/:id'], function (req, res) {
+app.options(['/create', '/delete/:id', '/upload'], function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader('Access-Control-Allow-Methods', '*')
   res.setHeader("Access-Control-Allow-Headers", "*")
@@ -37,3 +38,25 @@ async function start() {
 }
 
 start()
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+
+const upload = multer({ storage: storage }).single('file')
+
+app.post('/upload', function (req, res) {
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err)
+    } else if (err) {
+      return res.status(500).json(err)
+    }
+    return res.status(200).send(req.file)
+  })
+});
