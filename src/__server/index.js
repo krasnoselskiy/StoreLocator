@@ -1,9 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const multer = require('multer')
-const dotenv = require('dotenv').config()
+const path = require('path')
+const dotenv = require('dotenv').config({ path: __dirname + '/./../../.env' })
 const bodyParser = require('body-parser')
 const storeRoutes = require('./routes/stores')
+
 
 const PORT = process.env.PORT || 5000
 const app = express()
