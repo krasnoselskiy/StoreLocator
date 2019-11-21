@@ -5,16 +5,6 @@ const router = Router()
 const csv = require('csv-parser')
 const fs = require('fs')
 
-const results = [];
-
-// fs.createReadStream('2.csv')
-//   .pipe(csv())
-//   .on('data', (data) => results.push(data))
-//   .on('end', () => {
-//     console.log(results);
-//     Store.insertMany(results, function (error, docs) { });
-//   });
-
 router.get('/', async (req, res) => {
   const stores = await Store.find({})
 
@@ -39,15 +29,26 @@ router.post('/create', async (req, res, next) => {
   }
 })
 
-router.post('/upload', function (req, res) {
-  upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      return res.status(500).json(err)
-    } else if (err) {
-      return res.status(500).json(err)
+router.post('/upload', function (req, res, next) {
+  try {
+    if (!req.body.length || !req.body[0].address.length || !req.body[0].latitude.length || !req.body[0].longitude.length) {
+      throw new Error();
     }
-    return res.status(200).send(req.file)
-  })
+
+    req.body.forEach(function (store, index) {
+      let store_item = new Store({
+        display_name: store.address,
+        lat: store.latitude,
+        lon: store.longitude
+      })
+      store_item.save()
+    });
+
+    res.sendStatus(200);
+
+  } catch (e) {
+    next(e);
+  }
 });
 
 router.delete('/delete/:id', async (req, res, next) => {
