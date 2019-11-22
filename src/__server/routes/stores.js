@@ -36,12 +36,7 @@ router.post('/upload', function (req, res, next) {
     }
 
     req.body.forEach(function (store, index) {
-      let store_item = new Store({
-        display_name: store.address,
-        lat: store.latitude,
-        lon: store.longitude
-      })
-      store_item.save()
+      checkEndSave(store)
     });
 
     res.sendStatus(200);
@@ -66,5 +61,20 @@ router.delete('/delete/:id', async (req, res, next) => {
     next(e);
   }
 })
+
+function checkEndSave(store) {
+  Store.find({ lat: store.latitude }, (err, docs, next) => {
+    if (!docs.length) {
+      let store_item = new Store({
+        display_name: store.address,
+        lat: store.latitude,
+        lon: store.longitude
+      })
+      store_item.save()
+    } else {
+      // next(new Error("User exists!"));
+    }
+  });
+}
 
 module.exports = router
