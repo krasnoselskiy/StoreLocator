@@ -30,6 +30,9 @@ async function start() {
         useFindAndModify: false
       }
     )
+
+    console.log('db is successful conected!');
+
     app.listen(PORT, () => {
       console.log(`Server listen port ${PORT}`)
     })
