@@ -7,7 +7,6 @@ const fs = require('fs')
 
 router.get('/', async (req, res) => {
   const stores = await Store.find({})
-
   res.send(stores);
 })
 
@@ -29,18 +28,41 @@ router.post('/create', async (req, res, next) => {
   }
 })
 
-router.post('/upload', function (req, res, next) {
+router.post('/upload', (req, res, next) => {
   try {
     if (!req.body.length || !req.body[0].address.length || !req.body[0].latitude.length || !req.body[0].longitude.length) {
       throw new Error();
     }
 
+    let length = req.body.length;
+
     req.body.forEach(function (store, index) {
-      checkEndSave(store)
+      checkEndSave(store, finishCb)
     });
 
-    res.sendStatus(200);
+    function finishCb() {
+      length--;
+      if (length == 0) {
+        res.sendStatus(200);
+      }
+    }
 
+    function checkEndSave(store) {
+      Store.find({ lat: store.latitude }, async (err, docs, next) => {
+        if (!docs.length) {
+          let store_item = new Store({
+            display_name: store.address,
+            lat: store.latitude,
+            lon: store.longitude
+          })
+          await store_item.save();
+          finishCb()
+
+        } else {
+          // next(new Error("User exists!"));
+        }
+      });
+    }
   } catch (e) {
     next(e);
   }
@@ -61,20 +83,5 @@ router.delete('/delete/:id', async (req, res, next) => {
     next(e);
   }
 })
-
-function checkEndSave(store) {
-  Store.find({ lat: store.latitude }, (err, docs, next) => {
-    if (!docs.length) {
-      let store_item = new Store({
-        display_name: store.address,
-        lat: store.latitude,
-        lon: store.longitude
-      })
-      store_item.save()
-    } else {
-      // next(new Error("User exists!"));
-    }
-  });
-}
 
 module.exports = router
