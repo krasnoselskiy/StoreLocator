@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CSVReader from 'react-csv-reader'
 import axios from 'axios';
+
+import CsvLoad from './CsvLoad'
 
 import { fetchPlaces, openMapColumn, fetchPlacesFromDB } from '../redux/actions'
 
@@ -25,37 +26,14 @@ export class SearchForm extends Component {
     }
   }
 
-  createObj = (first, second) => {
-    const result = {};
-
-    first.forEach((key, i) => {
-      key = key.replace(/ /g, '');
-      let value = second[i];
-      return result[key] = value;
-    })
-
-    return result;
+  passStoresToServer = (stores) => {
+    this.handleLoadToServerFile(stores)
   }
 
-  handleCreateJSON = (data) => {
-    let json = [];
-
-    data.map((item, i) => {
-      if (i > 0 && item[0].length) {
-        json.push(this.createObj(data[0], data[i]))
-      }
-    })
-
-    this.setState({
-      stores: json
-    })
-  }
-
-  handleLoadToServerFile = e => {
+  handleLoadToServerFile = (stores) => {
     const { dispatch } = this.props
-    const data = this.state.stores;
 
-    axios.post("http://localhost:5000/upload", data, {})
+    axios.post("http://localhost:5000/upload", stores, {})
       .then(res => {
         dispatch(fetchPlacesFromDB())
       })
@@ -72,13 +50,7 @@ export class SearchForm extends Component {
           </form>
         </div>
 
-        <div className="col-6">
-          <CSVReader onFileLoaded={data => this.handleCreateJSON(data)} />
-          {this.state.stores.length ?
-            <div className="form-group">
-              <button type="button" className="btn btn-info btn-block" onClick={this.handleLoadToServerFile}>Upload</button>
-            </div> : null}
-        </div>
+        <CsvLoad passStoresJSON={this.passStoresToServer} />
       </div>
     )
   }
