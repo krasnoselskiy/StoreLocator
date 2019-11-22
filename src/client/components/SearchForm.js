@@ -9,10 +9,6 @@ import { fetchPlaces, openMapColumn, fetchPlacesFromDB } from '../redux/actions'
 export class SearchForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      stores: []
-    }
   }
 
   handleGettingPlaces = e => {
