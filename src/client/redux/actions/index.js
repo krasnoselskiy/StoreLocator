@@ -117,7 +117,7 @@ export const gettingFromDbSuccess = (action) => (
 )
 
 export const gettingFromDbError = (action) => {
-  toast.error('Saving to database was failed!', {
+  toast.error('Load from database was failed!', {
     autoClose: toastConfig.autoClose
   });
 
